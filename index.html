@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>배고픈 청춘을 위하여</title>
+<style>
+  :root {
+    --ink: #1c242a;
+    --soft: #5c6972;
+    --red: #b03430;
+    --mist: #e7eef2;
+    --paper: #f7f9fa;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--mist);
+    color: var(--ink);
+    font-family: "Apple SD Gothic Neo", "Noto Sans KR", "Malgun Gothic", sans-serif;
+  }
+  .wrap {
+    max-width: 1080px;
+    margin: 0 auto;
+    padding: 36px 20px 64px;
+  }
+  .kicker {
+    color: var(--red);
+    letter-spacing: 0.28em;
+    font-size: 12px;
+  }
+  h1 {
+    font-weight: 500;
+    font-size: 40px;
+    margin: 10px 0 6px;
+    letter-spacing: -0.03em;
+  }
+  .sub { color: var(--soft); margin: 0 0 28px; }
+  .stage {
+    display: grid;
+    grid-template-columns: minmax(240px, 420px) 1fr;
+    gap: 28px;
+    align-items: start;
+  }
+  .shot {
+    margin: 0;
+    background: white;
+    border: 1px solid #fff;
+    cursor: zoom-in;
+    box-shadow: 0 16px 40px rgba(28, 36, 42, 0.08);
+  }
+  .shot img { width: 100%; display: block; }
+  .shot figcaption {
+    padding: 10px 12px 12px;
+    color: var(--soft);
+    font-size: 13px;
+  }
+  .copy h2 {
+    font-size: 28px;
+    font-weight: 500;
+    line-height: 1.45;
+    margin: 0 0 8px;
+  }
+  .line { width: 36px; height: 2px; background: var(--red); margin: 14px 0; }
+  .han { color: var(--red); margin: 0; }
+  .sound { color: var(--soft); margin: 4px 0 18px; }
+  .ad {
+    font-size: 22px;
+    line-height: 1.55;
+    margin: 0 0 18px;
+  }
+  .note {
+    background: rgba(255,255,255,0.72);
+    padding: 16px 18px;
+    border: 1px solid #fff;
+  }
+  .note p { margin: 0 0 10px; line-height: 1.65; }
+  .note p:last-child { margin: 0; }
+  .buy {
+    display: inline-block;
+    margin-top: 18px;
+    color: var(--red);
+    text-decoration: none;
+    border-bottom: 1px solid var(--red);
+    padding-bottom: 2px;
+  }
+  .lightbox {
+    position: fixed;
+    inset: 0;
+    background: rgba(20, 26, 30, 0.82);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+    z-index: 5;
+  }
+  .lightbox.open { display: flex; }
+  .lightbox img {
+    max-width: min(920px, 94vw);
+    max-height: 92vh;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.35);
+  }
+  .lightbox button {
+    position: absolute;
+    top: 16px;
+    right: 18px;
+    background: transparent;
+    color: white;
+    border: 0;
+    font-size: 28px;
+    cursor: pointer;
+  }
+  @media (max-width: 800px) {
+    .stage { grid-template-columns: 1fr; }
+    h1 { font-size: 32px; }
+  }
+</style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="kicker">BOOK CARD</div>
+    <h1>배고픈 청춘을 위하여</h1>
+    <p class="sub">정한영 · 이미지를 누르면 커집니다</p>
+    <div class="stage">
+      <figure class="shot" id="open">
+        <img src="cover.jpg" alt="배고픈 청춘을 위하여 표지">
+        <figcaption>클릭하면 이미지가 커집니다</figcaption>
+      </figure>
+      <aside class="copy">
+        <h2>절망한 자에게 희망을,<br>빚진 자에게 기회를.</h2>
+        <div class="line"></div>
+        <p class="han">子悟民道信崔寶辰</p>
+        <p class="sound">자오민도신추보진</p>
+        <p class="ad">배고픈 청춘에게,<br>돌처럼 서 있으라.</p>
+        <div class="note">
+          <p>눈발 속에 선 돌은 누구에게도 빚지지 않는다. 다만, 오래 서서 길을 열어 둔다.</p>
+          <p>지주클럽. 2026년 7월 22일. 352쪽. ISBN 9791198488527. 예스24 정가 33,300원, 판매가 29,970원. 가격은 예스24 페이지가 기준이다.</p>
+          <p>광고 의뢰 1건은 100p. 초안을 만들고, 의미를 잠그고, 형태만 바꾼다.</p>
+        </div>
+        <a class="buy" href="https://www.yes24.com/product/goods/194774944">예스24에서 보기</a>
+      </aside>
+    </div>
+  </div>
+  <div class="lightbox" id="light" hidden>
+    <button type="button" id="close" aria-label="닫기">×</button>
+    <img src="cover.jpg" alt="커진 표지">
+  </div>
+  <script>
+    const light = document.getElementById("light");
+    document.getElementById("open").onclick = () => {
+      light.hidden = false;
+      light.classList.add("open");
+    };
+    document.getElementById("close").onclick = () => {
+      light.classList.remove("open");
+      light.hidden = true;
+    };
+    light.onclick = (e) => {
+      if (e.target === light) {
+        light.classList.remove("open");
+        light.hidden = true;
+      }
+    };
+  </script>
+</body>
+</html>
